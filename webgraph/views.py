@@ -10,4 +10,6 @@ def testpage(request):
     return HttpResponse('test')
 
 def landing(request):
+    args = pacman.readCommand( [ '-l', 'mediumMaze', '-p', 'SearchAgent', '-a', 'fn=bestfs', '-t'] ) # Get game components based on input
+    pacman.runGames( **args )
     return render(request, 'webgraph/landing.html')
