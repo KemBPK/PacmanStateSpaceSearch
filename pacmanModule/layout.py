@@ -12,8 +12,8 @@
 # Pieter Abbeel (pabbeel@cs.berkeley.edu).
 
 
-from util import manhattanDistance
-from game import Grid
+from .util import manhattanDistance
+from .game import Grid
 import os
 import random
 from functools import reduce
@@ -131,16 +131,17 @@ class Layout:
             self.numGhosts += 1
 def getLayout(name, back = 2):
     if name.endswith('.lay'):
-        layout = tryToLoad('layouts/' + name)
+        layout = tryToLoad('pacmanModule/layouts/' + name)
         if layout == None: layout = tryToLoad(name)
     else:
-        layout = tryToLoad('layouts/' + name + '.lay')
+        layout = tryToLoad('pacmanModule/layouts/' + name + '.lay')
         if layout == None: layout = tryToLoad(name + '.lay')
     if layout == None and back >= 0:
         curdir = os.path.abspath('.')
         os.chdir('..')
         layout = getLayout(name, back -1)
         os.chdir(curdir)
+    print("getLayout: ", layout)
     return layout
 
 def tryToLoad(fullname):

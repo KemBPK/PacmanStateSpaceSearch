@@ -39,13 +39,14 @@ code to run a game.  This file is divided into three sections:
 To play your first game, type 'python pacman.py' from the command line.
 The keys are 'a', 's', 'd', and 'w' to move (or arrow keys).  Have fun!
 """
-from game import GameStateData
-from game import Game
-from game import Directions
-from game import Actions
-from util import nearestPoint
-from util import manhattanDistance
-import util, layout
+from .game import GameStateData
+from .game import Game
+from .game import Directions
+from .game import Actions
+from .util import nearestPoint
+from .util import manhattanDistance
+from . import util
+from . import layout
 import sys, types, time, random, os
 
 ###################################################
@@ -557,10 +558,10 @@ def readCommand( argv ):
 
     # Choose a display format
     if options.quietGraphics:
-        import textDisplay
+        from . import textDisplay
         args['display'] = textDisplay.NullGraphics()
     elif options.textGraphics:
-        import textDisplay
+        from . import textDisplay
         textDisplay.SLEEP_TIME = options.frameTime
         args['display'] = textDisplay.PacmanGraphics()
     else:
@@ -586,26 +587,35 @@ def readCommand( argv ):
 
 def loadAgent(pacman, nographics):
     # Looks through all pythonPath Directories for the right module,
-    pythonPathStr = os.path.expandvars("$PYTHONPATH")
-    if pythonPathStr.find(';') == -1:
-        pythonPathDirs = pythonPathStr.split(':')
-    else:
-        pythonPathDirs = pythonPathStr.split(';')
-    pythonPathDirs.append('.')
+    if(pacman == 'SearchAgent'):
+        from . import searchAgents
+        return getattr(searchAgents, pacman)
+    
+    if(pacman == 'RandomGhost'):
+        from . import ghostAgents
+        return getattr(ghostAgents, pacman)
+    #print('loadAgent: ', ghostAgents, ' ', pacman)
+    
+    # pythonPathStr = os.path.expandvars("$PYTHONPATH")
+    # if pythonPathStr.find(';') == -1:
+    #     pythonPathDirs = pythonPathStr.split(':')
+    # else:
+    #     pythonPathDirs = pythonPathStr.split(';')
+    # pythonPathDirs.append('.')
 
-    for moduleDir in pythonPathDirs:
-        if not os.path.isdir(moduleDir): continue
-        moduleNames = [f for f in os.listdir(moduleDir) if f.endswith('gents.py')]
-        for modulename in moduleNames:
-            try:
-                module = __import__(modulename[:-3])
-            except ImportError:
-                continue
-            if pacman in dir(module):
-                if nographics and modulename == 'keyboardAgents.py':
-                    raise Exception('Using the keyboard requires graphics (not text display)')
-                return getattr(module, pacman)
-    raise Exception('The agent ' + pacman + ' is not specified in any *Agents.py.')
+    # for moduleDir in pythonPathDirs:
+    #     if not os.path.isdir(moduleDir): continue
+    #     moduleNames = [f for f in os.listdir(moduleDir) if f.endswith('gents.py')]
+    #     for modulename in moduleNames:
+    #         try:
+    #             module = __import__(modulename[:-3])
+    #         except ImportError:
+    #             continue
+    #         if pacman in dir(module):
+    #             if nographics and modulename == 'keyboardAgents.py':
+    #                 raise Exception('Using the keyboard requires graphics (not text display)')
+    #             return getattr(module, pacman)
+    #raise Exception('The agent ' + pacman + ' is not specified in any *Agents.py.')
 
 def replayGame( layout, actions, display ):
     import pacmanAgents, ghostAgents
@@ -643,7 +653,7 @@ def runGames( layout, pacman, ghosts, display, numGames, record, numTraining = 0
         beQuiet = i < numTraining
         if beQuiet:
                 # Suppress output and graphics
-            import textDisplay
+            from . import textDisplay
             gameDisplay = textDisplay.NullGraphics()
             rules.quiet = True
         else:
