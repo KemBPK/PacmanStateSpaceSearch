@@ -141,7 +141,7 @@ def getLayout(name, back = 2):
         os.chdir('..')
         layout = getLayout(name, back -1)
         os.chdir(curdir)
-    print("getLayout: ", layout)
+    #print("getLayout: ", layout)
     return layout
 
 def tryToLoad(fullname):
