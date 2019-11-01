@@ -52,10 +52,11 @@ class PacmanGraphics:
             SLEEP_TIME = speed
 
     def initialize(self, state, isBlue = False):
-        self.draw(state)
+        #self.draw(state)
         self.pause()
         self.turn = 0
         self.agentCounter = 0
+        return state
 
     def update(self, state):
         numAgents = len(state.agentStates)
@@ -66,10 +67,14 @@ class PacmanGraphics:
                 ghosts = [pacman.nearestPoint(state.getGhostPosition(i)) for i in range(1, numAgents)]
                 print ("%4d) P: %-8s" % (self.turn, str(pacman.nearestPoint(state.getPacmanPosition()))),'| Score: %-5d' % state.score,'| Ghosts:', ghosts)
             if self.turn % DRAW_EVERY == 0:
-                self.draw(state)
-                self.pause()
+                #print(state)
+                return state
+                #self.draw(state)
+                #self.pause()
         if state._win or state._lose:
-            self.draw(state)
+            #print(state)
+            return state
+            #self.draw(state)
 
     def pause(self):
         time.sleep(SLEEP_TIME)

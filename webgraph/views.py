@@ -11,5 +11,12 @@ def testpage(request):
 
 def landing(request):
     args = pacman.readCommand( [ '-l', 'mediumMaze', '-p', 'SearchAgent', '-a', 'fn=bestfs', '-t'] ) # Get game components based on input
-    pacman.runGames( **args )
+    game = pacman.runGames( **args )
+    # print pacman navigating through the maze 
+    for x in game[0]:
+        print(x)
+    print('Average Score:', sum(game[1]) / float(len(game[1])))
+    print('Scores:       ', ', '.join([str(game[1]) for score in game[1]]))
+    print('Win Rate:      %d/%d (%.2f)' % (game[2].count(True), len(game[2]), game[3]))
+    print('Record:       ', ', '.join([ ['Loss', 'Win'][int(w)] for w in game[2]]))
     return render(request, 'webgraph/landing.html')

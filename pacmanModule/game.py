@@ -568,7 +568,8 @@ class Game:
         """
         Main control loop for game play.
         """
-        self.display.initialize(self.state.data)
+        gameplay = []
+        gameplay.append(self.display.initialize(self.state.data))
         self.numMoves = 0
 
         ###self.display.initialize(self.state.makeObservation(1).data)
@@ -610,6 +611,7 @@ class Game:
 
         agentIndex = self.startingIndex
         numAgents = len( self.agents )
+
 
         while not self.gameOver:
             # Fetch the next agent
@@ -700,7 +702,7 @@ class Game:
                 self.state = self.state.generateSuccessor( agentIndex, action )
 
             # Change the display
-            self.display.update( self.state.data )
+            gameplay.append(self.display.update( self.state.data ))
             ###idx = agentIndex - agentIndex % 2 + 1
             ###self.display.update( self.state.makeObservation(idx).data )
 
@@ -727,3 +729,5 @@ class Game:
                     self.unmute()
                     return
         self.display.finish()
+
+        return gameplay
