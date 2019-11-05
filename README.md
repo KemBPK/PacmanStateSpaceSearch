@@ -8,8 +8,8 @@ Ye Lim Koo<br>
 
 # Setup Instruction
 <br>
-* Download latest Python 
-* Clone repo into your computer and nagivate to /pacmanstatespacesearch/ folder inside the terminal 
+* Download latest Python
+* Clone repo into your computer and nagivate to /pacmanstatespacesearch/ folder inside the terminal
 * Then use the following commands:
     ```
     python -m venv venv               //This will create a virtual environment to run the app
