@@ -13,13 +13,18 @@ Ye Lim Koo<br>
 
 * Clone repo into your computer and nagivate to /pacmanstatespacesearch/ folder inside the terminal
 
-* Commands:
+* Then execute the following commands:
     ```
     python -m venv venv               //This will create a virtual environment to run the app
     venv\Scripts\activate             //This will run a virtual environment
     pip install django                //This will install the django packet
-    deactivate                        //This will exit the virtual environment
     ```
+    
+* Other commands:
+
+    ```
+     deactivate                        //This will exit the virtual environment
+     ```
 
 # Running the website
 <br>
