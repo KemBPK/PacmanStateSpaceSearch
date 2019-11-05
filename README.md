@@ -8,8 +8,11 @@ Ye Lim Koo<br>
 
 # Setup Instruction
 <br>
+
 * Download latest Python
+
 * Clone repo into your computer and nagivate to /pacmanstatespacesearch/ folder inside the terminal
+
 * Then use the following commands:
     ```
     python -m venv venv               //This will create a virtual environment to run the app
@@ -21,8 +24,10 @@ Ye Lim Koo<br>
 # Running the website
 <br>
 * Use the following commands in the terminal:
+
     ```
     venv\Scripts\activate             //This will run a virtual environment
     python manage.py runserver        //This will run the website in localhost
     ```
+    
 * Then type in the URL http://localhost:8000 to test the website.
