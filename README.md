@@ -13,7 +13,7 @@ Ye Lim Koo<br>
 
 * Clone repo into your computer and nagivate to /pacmanstatespacesearch/ folder inside the terminal
 
-* Then use the following commands:
+* Commands:
     ```
     python -m venv venv               //This will create a virtual environment to run the app
     venv\Scripts\activate             //This will run a virtual environment
