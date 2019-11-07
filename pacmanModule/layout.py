@@ -145,9 +145,9 @@ def getLayout(name, back = 2):
     # print("getLayout:\n", layout)
     # return layout
 
-    maze = Maze.generate(10, 10)._to_str_matrix()
+    maze = Maze.generate(30, 10)._to_str_matrix()
     maze = [''.join(str(x) for x in row[0:]) for row in maze]
-    maze[1] = change_char(maze[1], 1, 'P')
+    maze[1] = change_char(maze[1], len(maze[1])-2, 'P')
     maze[len(maze)-2] = change_char(maze[len(maze)-2], 1, '.')
     layout = Layout(maze)
     print("getLayout:\n", layout)
