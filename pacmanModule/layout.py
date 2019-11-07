@@ -14,6 +14,7 @@
 
 from .util import manhattanDistance
 from .game import Grid
+from .maze import Maze
 import os
 import random
 from functools import reduce
@@ -130,22 +131,35 @@ class Layout:
             self.agentPositions.append( (int(layoutChar), (x,y)))
             self.numGhosts += 1
 def getLayout(name, back = 2):
-    if name.endswith('.lay'):
-        layout = tryToLoad('pacmanModule/layouts/' + name)
-        if layout == None: layout = tryToLoad(name)
-    else:
-        layout = tryToLoad('pacmanModule/layouts/' + name + '.lay')
-        if layout == None: layout = tryToLoad(name + '.lay')
-    if layout == None and back >= 0:
-        curdir = os.path.abspath('.')
-        os.chdir('..')
-        layout = getLayout(name, back -1)
-        os.chdir(curdir)
-    #print("getLayout: ", layout)
+    # if name.endswith('.lay'):
+    #     layout = tryToLoad('pacmanModule/layouts/' + name)
+    #     if layout == None: layout = tryToLoad(name)
+    # else:
+    #     layout = tryToLoad('pacmanModule/layouts/' + name + '.lay')
+    #     if layout == None: layout = tryToLoad(name + '.lay')
+    # if layout == None and back >= 0:
+    #     curdir = os.path.abspath('.')
+    #     os.chdir('..')
+    #     layout = getLayout(name, back -1)
+    #     os.chdir(curdir)
+    # print("getLayout:\n", layout)
+    # return layout
+
+    maze = Maze.generate(30, 10)._to_str_matrix()
+    maze = [''.join(str(x) for x in row[0:]) for row in maze]
+    maze[1] = change_char(maze[1], len(maze[1])-2, 'P')
+    maze[len(maze)-2] = change_char(maze[len(maze)-2], 1, '.')
+    layout = Layout(maze)
+    print("getLayout:\n", layout)
     return layout
 
 def tryToLoad(fullname):
     if(not os.path.exists(fullname)): return None
     f = open(fullname)
+    # test = [line.strip() for line in f]
+    # print(test)
     try: return Layout([line.strip() for line in f])
     finally: f.close()
+
+def change_char(s, p, r):
+    return s[:p]+r+s[p+1:]
