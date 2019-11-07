@@ -14,6 +14,7 @@
 
 from .util import manhattanDistance
 from .game import Grid
+from .maze import Maze
 import os
 import random
 from functools import reduce
@@ -141,53 +142,24 @@ def getLayout(name, back = 2):
     #     os.chdir('..')
     #     layout = getLayout(name, back -1)
     #     os.chdir(curdir)
-    
-    # layout = "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n%                                 P%\n"
-    # for i in range(15):
-    #     string = "% "
-    #     for j in range(2, 35):
-    #         if(bool(random.getrandbits(1))):
-    #             string += '%'
-    #         else:
-    #             string += ' '
-    #     string += '%'
-    #     layout += (string + '\n')
+    # print("getLayout:\n", layout)
+    # return layout
 
-    # string += "\n%."
-    # for j in range(33):
-    #     if(bool(random.getrandbits(1))):
-    #         string += '%'
-    #     else:
-    #         string += ' '
-    # string += '%'
-    # layout += (string + '\n')
-    # layout += "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
-
-    layout = ['%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%', '%                                 P%']
-
-    for i in range(15):
-        string = '% '
-        for j in range(2, 35):
-            if(bool(random.getrandbits(1))):
-                string += '%'
-            else:
-                string += ' '
-        string += '%'
-        layout.append(string)
-
-    layout.append('%.                                 %')
-    layout.append('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
-
-
-    #layout = ['%%%%%%%', '%    P%', '% %%% %', '%  %  %', '%%   %%', '%. %%%%', '%%%%%%%']
-    layout = Layout(layout)
+    maze = Maze.generate(10, 10)._to_str_matrix()
+    maze = [''.join(str(x) for x in row[0:]) for row in maze]
+    maze[1] = change_char(maze[1], 1, 'P')
+    maze[len(maze)-2] = change_char(maze[len(maze)-2], 1, '.')
+    layout = Layout(maze)
     print("getLayout:\n", layout)
     return layout
 
 def tryToLoad(fullname):
     if(not os.path.exists(fullname)): return None
     f = open(fullname)
-    test = [line.strip() for line in f]
-    print(test)
+    # test = [line.strip() for line in f]
+    # print(test)
     try: return Layout([line.strip() for line in f])
     finally: f.close()
+
+def change_char(s, p, r):
+    return s[:p]+r+s[p+1:]
