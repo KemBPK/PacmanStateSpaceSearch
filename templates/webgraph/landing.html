@@ -1,14 +1,116 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/landing.css' %}">
+{% endblock css %}
+
 {% block title %}<title>Algorithm Battle</title>{% endblock title %}
 
 {% block content %}
-    <div class="container">
-        <div class="card">
-            <div class="card-body">
-                Hello World!
-            </div>
+<header>
+    <!-- HEADER IMAGE -->
+    <div class="jumbotron jumbotron-fluid header-jumbo">
+        <img src="{% static 'images/pacman-header.gif' %}" class="mx-auto d-block">
+    </div>
+    <!-- END HEADER IMAGE -->
+</header>
+<main>
+    <div class="container algo-container">
+        <div class="card bg-dark text-white" id=graph-card>
+            <canvas id="myChart" height="200" width="400"></canvas>
+        </div>
+        <div class="container run-btns">
+            <button type="button" class="btn btn-warning">Depth-First Search</button>
+            <button type="button" class="btn btn-warning">Breadth-First Search</button>
+            <button type="button" class="btn btn-warning">Best-First Search</button>
         </div>
     </div>
+
+</main>
 {% endblock content %}
+
+
+{% block js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
+<script>
+    var fontColor = 'white'
+    var gridColor = '#666'
+    var fontSize = 18
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Depth-First Search', 'Breath-First Search', 'Best-First Search'],
+            datasets: [{
+                label: '# of Runs',
+                data: [12, 19, 3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(153, 102, 255, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            tooltips: {
+                callbacks: {
+                    label: function (toolTipItems, data) {
+                        return
+                    },
+                    footer: function (toolTipItems, data) {
+                        var timesRan = 'Times Ran: 347'
+                        var avgSpeed = 'Average Speed: 0.90238 sec.'
+                        return [timesRan, avgSpeed]
+                    }
+                }
+            },
+            legend: {
+                labels: {
+                    fontColor: fontColor,
+                    fontSize: fontSize
+                }
+            },
+            scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Number of times Ran',
+                        fontColor: fontColor,
+                        fontSize: fontSize
+                    },
+                    gridLines: {
+                        color: gridColor
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                        fontColor: fontColor,
+                        fontSize: fontSize
+                    }
+                }],
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Algorithm',
+                        fontColor: fontColor,
+                        fontSize: fontSize
+                    },
+                    gridLines: {
+                        color: gridColor
+                    },
+                    ticks: {
+                        fontColor: fontColor,
+                        fontSize: fontSize
+                    }
+                }]
+            }
+        }
+    });
+</script>
+{% endblock js %}

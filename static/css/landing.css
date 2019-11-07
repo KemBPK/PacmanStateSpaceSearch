@@ -1,0 +1,12 @@
+body {
+    background-color: rgb(44, 47, 50);
+}
+.header-jumbo {
+    background-color: black;
+}
+
+.run-btns {
+    margin-top: 75px;
+    display: flex;
+    justify-content: space-around;
+}
