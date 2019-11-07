@@ -130,22 +130,64 @@ class Layout:
             self.agentPositions.append( (int(layoutChar), (x,y)))
             self.numGhosts += 1
 def getLayout(name, back = 2):
-    if name.endswith('.lay'):
-        layout = tryToLoad('pacmanModule/layouts/' + name)
-        if layout == None: layout = tryToLoad(name)
-    else:
-        layout = tryToLoad('pacmanModule/layouts/' + name + '.lay')
-        if layout == None: layout = tryToLoad(name + '.lay')
-    if layout == None and back >= 0:
-        curdir = os.path.abspath('.')
-        os.chdir('..')
-        layout = getLayout(name, back -1)
-        os.chdir(curdir)
-    #print("getLayout: ", layout)
+    # if name.endswith('.lay'):
+    #     layout = tryToLoad('pacmanModule/layouts/' + name)
+    #     if layout == None: layout = tryToLoad(name)
+    # else:
+    #     layout = tryToLoad('pacmanModule/layouts/' + name + '.lay')
+    #     if layout == None: layout = tryToLoad(name + '.lay')
+    # if layout == None and back >= 0:
+    #     curdir = os.path.abspath('.')
+    #     os.chdir('..')
+    #     layout = getLayout(name, back -1)
+    #     os.chdir(curdir)
+    
+    # layout = "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n%                                 P%\n"
+    # for i in range(15):
+    #     string = "% "
+    #     for j in range(2, 35):
+    #         if(bool(random.getrandbits(1))):
+    #             string += '%'
+    #         else:
+    #             string += ' '
+    #     string += '%'
+    #     layout += (string + '\n')
+
+    # string += "\n%."
+    # for j in range(33):
+    #     if(bool(random.getrandbits(1))):
+    #         string += '%'
+    #     else:
+    #         string += ' '
+    # string += '%'
+    # layout += (string + '\n')
+    # layout += "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+
+    layout = ['%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%', '%                                 P%']
+
+    for i in range(15):
+        string = '% '
+        for j in range(2, 35):
+            if(bool(random.getrandbits(1))):
+                string += '%'
+            else:
+                string += ' '
+        string += '%'
+        layout.append(string)
+
+    layout.append('%.                                 %')
+    layout.append('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+
+
+    #layout = ['%%%%%%%', '%    P%', '% %%% %', '%  %  %', '%%   %%', '%. %%%%', '%%%%%%%']
+    layout = Layout(layout)
+    print("getLayout:\n", layout)
     return layout
 
 def tryToLoad(fullname):
     if(not os.path.exists(fullname)): return None
     f = open(fullname)
+    test = [line.strip() for line in f]
+    print(test)
     try: return Layout([line.strip() for line in f])
     finally: f.close()
