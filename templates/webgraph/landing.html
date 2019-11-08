@@ -21,10 +21,10 @@
             <canvas id="myChart" height="200" width="400"></canvas>
         </div>
         <div class="container run-btns">
-            <button type="button" class="btn btn-warning">Depth-First Search</button>
-            <button type="button" class="btn btn-warning">Breadth-First Search</button>
-            <button type="button" class="btn btn-warning">Best-First Search</button>
-            <button type="button" class="btn btn-warning">A* Search</button>
+            <button id="dfs" type="button" class="btn btn-warning">Depth-First Search</button>
+            <button id="bfs" type="button" class="btn btn-warning">Breadth-First Search</button>
+            <button id="bestfs" type="button" class="btn btn-warning">Best-First Search</button>
+            <button id="astar" type="button" class="btn btn-warning">A* Search</button>
         </div>
     </div>
 
@@ -33,6 +33,65 @@
 
 
 {% block js %}
+
+<script>
+    
+    function RunPacman(alg){
+        $.ajax({ 
+            type : "POST", 
+            url : "/runPacman", 
+            data: { 'alg': alg },
+            contentType: 'application/json; charset=UTF-8;',
+            dataType: "json",
+            beforeSend: function(xhr, settings) {
+                function getCookie(name) {
+                    var cookieValue = null;
+                    if (document.cookie && document.cookie != '') {
+                        var cookies = document.cookie.split(';');
+                        for (var i = 0; i < cookies.length; i++) {
+                            var cookie = jQuery.trim(cookies[i]);
+                            // Does this cookie string begin with the name we want?
+                            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                break;
+                            }
+                        }
+                    }
+                    return cookieValue;
+                }
+                if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                    // Only send the token to relative URLs i.e. locally.
+                    xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                }
+            },
+            success : function(result) { 
+                alert(result.output.length);
+            }, 
+            error : function(result) { 
+                alert('An error has occured.');
+            } 
+            }); 
+
+
+    }
+
+    $('#dfs').click(function(){
+        RunPacman('dfs');
+    });
+
+    $('#bfs').click(function(){
+        RunPacman('bfs');
+    });
+
+    $('#bestfs').click(function(){
+        RunPacman('bestfs');
+    });
+
+    $('#astar').click(function(){
+        RunPacman('astar');
+    });
+</script>
+
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
 <script>
     var fontColor = 'white'

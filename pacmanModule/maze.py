@@ -78,12 +78,15 @@ class Maze(object):
         """
         Creates a new maze with the given sizes, with all walls standing.
         """
+        print('width: ', width, ' height: ', height, '\n')
         self.width = width
         self.height = height
         self.cells = []
         for y in range(self.height):
             for x in range(self.width):
                 self.cells.append(Cell(x, y, [N, S, E, W]))
+
+        print(len(self.cells), '\n')
 
     def __getitem__(self, index):
         """
