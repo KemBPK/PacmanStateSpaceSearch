@@ -150,7 +150,7 @@ def getLayout(name, back = 2):
     maze[1] = change_char(maze[1], len(maze[1])-2, 'P')
     maze[len(maze)-2] = change_char(maze[len(maze)-2], 1, '.')
     layout = Layout(maze)
-    print("getLayout:\n", layout)
+    #print("getLayout:\n", layout)
     return layout
 
 def tryToLoad(fullname):

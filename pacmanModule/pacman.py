@@ -47,6 +47,7 @@ from .util import nearestPoint
 from .util import manhattanDistance
 from . import util
 from . import layout
+from .layout import Layout
 import sys, types, time, random, os
 
 ###################################################
@@ -474,7 +475,7 @@ def parseAgentArgs(str):
         opts[key] = val
     return opts
 
-def readCommand( argv ):
+def readCommand( argv, maze ): #def readCommand( argv )
     """
     Processes the command used to run pacman from the command line.
     """
@@ -534,7 +535,7 @@ def readCommand( argv ):
     if options.fixRandomSeed: random.seed('cs188')
 
     # Choose a layout
-    args['layout'] = layout.getLayout( options.layout )
+    args['layout'] = Layout(maze) #layout.getLayout( options.layout )
     if args['layout'] == None: raise Exception("The layout " + options.layout + " cannot be found")
 
     # Choose a Pacman agent

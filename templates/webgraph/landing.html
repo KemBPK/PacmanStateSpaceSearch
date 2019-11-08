@@ -17,30 +17,36 @@
 </header>
 <main>
     <div class="container algo-container">
-        <div class="card bg-dark text-white" id=graph-card>
-            <canvas id="myChart" height="200" width="400"></canvas>
+        <div id="maze" class="card bg-dark text-white" style="text-align: center;">
         </div>
+        <!-- <div class="card bg-dark text-white" id=graph-card>      
+            <canvas id="myChart" height="200" width="400"></canvas>
+        </div> -->
         <div class="container run-btns">
             <button id="dfs" type="button" class="btn btn-warning">Depth-First Search</button>
             <button id="bfs" type="button" class="btn btn-warning">Breadth-First Search</button>
             <button id="bestfs" type="button" class="btn btn-warning">Best-First Search</button>
             <button id="astar" type="button" class="btn btn-warning">A* Search</button>
-        </div>
+        </div>    
     </div>
 
 </main>
+<!-- <footer>
+    <div class="jumbotron jumbotron-fluid header-jumbo">
+        <img src="{% static 'images/pacman-header.gif' %}" class="mx-auto d-block">
+    </div>
+</footer> -->
 {% endblock content %}
 
 
 {% block js %}
 
 <script>
-    
-    function RunPacman(alg){
+
+    function GenerateMaze(){
         $.ajax({ 
             type : "POST", 
-            url : "/runPacman", 
-            data: { 'alg': alg },
+            url : "/generateMaze", 
             contentType: 'application/json; charset=UTF-8;',
             dataType: "json",
             beforeSend: function(xhr, settings) {
@@ -65,14 +71,107 @@
                 }
             },
             success : function(result) { 
-                alert(result.output.length);
+                //alert(result.maze.length);
+                $('#maze').data('maze', result.maze);
+                var output = "";
+                for(i in result.maze){
+                    for(j=0; j<result.maze[i].length; ++j){
+                        if(result.maze[i].charAt(j) == ' '){
+                            output += '&nbsp;&nbsp;&nbsp;';
+                        }
+                        else if(result.maze[i].charAt(j) == '%'){
+                            output += '%';
+                        }
+                        else if(result.maze[i].charAt(j) == 'P'){
+                            output += 'S';
+                        }
+                        else{
+                            output += 'E';
+                        }
+                    }
+                    output += '<br>';
+                }
+                $('#maze').html(output);
             }, 
             error : function(result) { 
                 alert('An error has occured.');
             } 
             }); 
+    }
 
+    GenerateMaze();
+    
+    function RunPacman(alg){
+        $.ajax({ 
+            type : "POST", 
+            url : "/runPacman", 
+            data: { 'alg': alg,
+                    'maze': $('#maze').data('maze') },
+            contentType: 'application/json; charset=UTF-8;',
+            dataType: "json",
+            beforeSend: function(xhr, settings) {
+                function getCookie(name) {
+                    var cookieValue = null;
+                    if (document.cookie && document.cookie != '') {
+                        var cookies = document.cookie.split(';');
+                        for (var i = 0; i < cookies.length; i++) {
+                            var cookie = jQuery.trim(cookies[i]);
+                            // Does this cookie string begin with the name we want?
+                            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                break;
+                            }
+                        }
+                    }
+                    return cookieValue;
+                }
+                if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                    // Only send the token to relative URLs i.e. locally.
+                    xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                }
+            },
+            success : function(result) { 
+                // alert(result.output.length);                
+                for(i in result.output){
+                    (function(i){
+                        setTimeout(function(){
+                            var output = "";  
+                            for(j=0; j<result.output[i].length; ++j){
+                                if(result.output[i].charAt(j) == ' '){
+                                    output += '&nbsp;&nbsp;&nbsp;';
+                                }
+                                else if(result.output[i].charAt(j) == '%'){
+                                    output += '%';
+                                }
+                                else if(result.output[i].charAt(j) == 'P'){
+                                    output += 'S';
+                                }
+                                else if(result.output[i].charAt(j) == 'E'){
+                                    output += 'E';
+                                }
+                                else if(result.output[i].charAt(j) == '\n'){
+                                    output += '<br>';
+                                }
+                                // else if(result.output[i].charAt(j) == '^'){
+                                //     output += '^ ';
+                                // }
+                                // else if(result.output[i].charAt(j) == 'v'){
+                                //     output += 'v ';
+                                // }
+                                else{
+                                    output += result.output[i].charAt(j);
+                                }
+                            }
+                            $('#maze').html(output);
+                        }, 250 *i);
 
+                    })(i);                      
+                }
+            }, 
+            error : function(result) { 
+                alert('An error has occured.');
+            } 
+            }); 
     }
 
     $('#dfs').click(function(){
