@@ -7,7 +7,7 @@ from pacmanModule import pacman
 import json
 from cgi import parse_header
 from pacmanModule.maze import Maze
-from pacmanModule.layout import change_char
+from pacmanModule.layout import change_char,randBool
 
 def testpage(request):
     args = pacman.readCommand( [ '-l', 'mediumMaze', '-p', 'SearchAgent', '-a', 'fn=bestfs', '-t'] ) # Get game components based on input
@@ -41,6 +41,13 @@ def generateMaze(request):
         maze = [''.join(str(x) for x in row[0:]) for row in maze]
         maze[1] = change_char(maze[1], len(maze[1])-2, 'P')
         maze[len(maze)-2] = change_char(maze[len(maze)-2], 1, '.')
+        for i in range(1, len(maze)-1):
+            for j in range(1, len(maze[i])-1):
+                if(maze[i][j] == '%'):
+                    if(randBool()):
+                        maze[i] = change_char(maze[i], j, ' ')
+                        #print('revert cell')
+        #print(maze)
         return JsonResponse({'maze': maze})
     else:
         return JsonResponse({'maze': []})

@@ -149,8 +149,16 @@ def getLayout(name, back = 2):
     maze = [''.join(str(x) for x in row[0:]) for row in maze]
     maze[1] = change_char(maze[1], len(maze[1])-2, 'P')
     maze[len(maze)-2] = change_char(maze[len(maze)-2], 1, '.')
+
+    for i in range(1, len(maze)-1):
+        for j in range(1, len(maze[i])-1):
+            if(maze[i][j] == '%'):
+                if(randBool()):
+                    maze[i] = change_char(maze[i], j, ' ')
+                    #print('revert cell')
+
     layout = Layout(maze)
-    #print("getLayout:\n", layout)
+    # print("getLayout:\n", layout)
     return layout
 
 def tryToLoad(fullname):
@@ -163,3 +171,6 @@ def tryToLoad(fullname):
 
 def change_char(s, p, r):
     return s[:p]+r+s[p+1:]
+
+def randBool(percent=90):
+    return random.randrange(100) > percent

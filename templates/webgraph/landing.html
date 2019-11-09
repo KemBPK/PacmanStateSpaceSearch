@@ -17,7 +17,8 @@
 </header>
 <main>
     <div class="container algo-container">
-        <div id="maze" class="card bg-dark text-white" style="text-align: center;">
+        <div class="card bg-dark text-white" style="text-align: center;">
+            <div id="maze" style="display: inline-block;"></div>
         </div>
         <!-- <div class="card bg-dark text-white" id=graph-card>      
             <canvas id="myChart" height="200" width="400"></canvas>
@@ -152,6 +153,9 @@
                                 else if(result.output[i].charAt(j) == '\n'){
                                     output += '<br>';
                                 }
+                                else if(result.output[i].charAt(j) == '.'){
+                                    output += '.&nbsp;';
+                                }
                                 // else if(result.output[i].charAt(j) == '^'){
                                 //     output += '^ ';
                                 // }
@@ -159,7 +163,7 @@
                                 //     output += 'v ';
                                 // }
                                 else{
-                                    output += result.output[i].charAt(j);
+                                    output += '<span class style=\'color: yellow;\'>' + result.output[i].charAt(j) + '</span>';
                                 }
                             }
                             $('#maze').html(output);
