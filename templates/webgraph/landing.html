@@ -28,6 +28,7 @@
             <button id="bfs" type="button" class="btn btn-warning">Breadth-First Search</button>
             <button id="bestfs" type="button" class="btn btn-warning">Best-First Search</button>
             <button id="astar" type="button" class="btn btn-warning">A* Search</button>
+            <button id="ucs" type="button" class="btn btn-warning">Uniform-Cost Search</button>
         </div>    
     </div>
 
@@ -192,6 +193,10 @@
 
     $('#astar').click(function(){
         RunPacman('astar');
+    });
+
+    $('#ucs').click(function(){
+        RunPacman('ucs');
     });
 </script>
 
