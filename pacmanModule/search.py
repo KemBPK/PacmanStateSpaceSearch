@@ -103,9 +103,43 @@ def breadthFirstSearch(problem):
     return False 
 
 def uniformCostSearch(problem):
-    """Search the node of least total cost first."""
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    open_queue = util.PriorityQueue() 
+    priority = 0
+    # print(priority)
+    open_queue.push((problem.getStartState(), []), priority) 
+    close_queue = util.Queue() 
+    while open_queue.isEmpty() is not True: 
+        x, path = open_queue.pop() 
+        if problem.isGoalState(x): 
+            return path 
+        else: 
+            x_children = problem.getSuccessors(x) 
+            for child in x_children: 
+  
+                for y in [item for item in open_queue.heap if child[0] in item]: 
+                    if(len(path) + 1 < len(y[1])): 
+                        y[1] = path + [child[1]] 
+                        print("current < opened") 
+ 
+                for y in [item for item in close_queue.list if child[0] in item]: 
+                    if(len(path) + 1 < len(y[1])): 
+                        newPath =  path + [child[1]] 
+                        newState = y[0]
+                        newPriority = len(path)+1
+                        open_queue.push((newState, newPath), newPriority)
+                        close_queue.list.remove(y)
+                        print("current < closed") 
+ 
+                if len(list(filter(lambda x:child[0] in x, open_queue.heap))) == 0 and len(list(filter(lambda x:child[0] in x, close_queue.list))) == 0: 
+                #if child[0] not in open_queue.heap and child not in close_queue.list: 
+                    child_priority =  len(path)+1 # astar: include len(path)+1 | best first search: leave len(path)+1 out
+                    # print(child_priority)
+                    open_queue.push((child[0], path + [child[1]]), child_priority)
+                    
+
+                
+        close_queue.push((x, path)) 
+    return False 
 
 def nullHeuristic(state, problem=None):
     """
