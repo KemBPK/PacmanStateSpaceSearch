@@ -5,6 +5,7 @@ __pycache__/
 *$py.class
 *.pyc
 venv
+eb-virt
 
 # C extensions
 *.so
