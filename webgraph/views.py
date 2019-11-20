@@ -8,6 +8,7 @@ import json
 from cgi import parse_header
 from pacmanModule.maze import Maze
 from pacmanModule.layout import change_char,randBool
+from django.views.decorators.csrf import csrf_exempt
 
 def testpage(request):
     args = pacman.readCommand( [ '-l', 'mediumMaze', '-p', 'SearchAgent', '-a', 'fn=bestfs', '-t'] ) # Get game components based on input
@@ -34,7 +35,7 @@ def landing(request):
     # print('Record:       ', ', '.join([ ['Loss', 'Win'][int(w)] for w in game[2]]))
     return render(request, 'webgraph/landing.html')
 
-
+@csrf_exempt
 def generateMaze(request):
     if request.method == 'POST':
         maze = Maze.generate(30, 15)._to_str_matrix()
@@ -52,6 +53,7 @@ def generateMaze(request):
     else:
         return JsonResponse({'maze': []})
 
+@csrf_exempt
 def runPacman(request):
     print("called runPacman")
     if request.method == 'POST':
