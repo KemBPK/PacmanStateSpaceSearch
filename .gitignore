@@ -6,6 +6,7 @@ __pycache__/
 *.pyc
 venv
 eb-virt
+requirement.txt
 
 # C extensions
 *.so
