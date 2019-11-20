@@ -8,6 +8,7 @@ import json
 from cgi import parse_header
 from pacmanModule.maze import Maze
 from pacmanModule.layout import change_char,randBool
+from django.views.decorators.csrf import csrf_exempt
 
 def testpage(request):
     args = pacman.readCommand( [ '-l', 'mediumMaze', '-p', 'SearchAgent', '-a', 'fn=bestfs', '-t'] ) # Get game components based on input
