@@ -25,7 +25,7 @@ SECRET_KEY = 'i6sdysvd)l6=jtq$*e*@r8a00my678&)s%hkffnuuk0^#056p='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['pacman-env.ara7xaf4tp.us-west-1.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['pacman-env.ara7xaf4tp.us-west-1.elasticbeanstalk.com', 'localhost']
 
 
 # Application definition
