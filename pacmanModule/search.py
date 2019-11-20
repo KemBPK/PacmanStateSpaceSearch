@@ -165,7 +165,7 @@ def bestFirstSearch(problem):
                 for y in [item for item in open_queue.heap if child[0] in item]: 
                     if(len(path) + 1 < len(y[1])): 
                         y[1] = path + [child[1]] 
-                        print("current < opened") 
+                        # print("current < opened") 
  
                 for y in [item for item in close_queue.list if child[0] in item]: 
                     if(len(path) + 1 < len(y[1])): 
@@ -174,7 +174,7 @@ def bestFirstSearch(problem):
                         newPriority = util.manhattanDistance(newState, problem.goal)
                         open_queue.push((newState, newPath), newPriority)
                         close_queue.list.remove(y)
-                        print("current < closed") 
+                        # print("current < closed") 
  
                 if len(list(filter(lambda x:child[0] in x, open_queue.heap))) == 0 and len(list(filter(lambda x:child[0] in x, close_queue.list))) == 0: 
                 #if child[0] not in open_queue.heap and child not in close_queue.list: 
@@ -204,7 +204,7 @@ def aStarSearch(problem):
                 for y in [item for item in open_queue.heap if child[0] in item]: 
                     if(len(path) + 1 < len(y[1])): 
                         y[1] = path + [child[1]] 
-                        print("current < opened") 
+                        # print("current < opened") 
  
                 for y in [item for item in close_queue.list if child[0] in item]: 
                     if(len(path) + 1 < len(y[1])): 
@@ -213,7 +213,7 @@ def aStarSearch(problem):
                         newPriority = len(newPath) + util.manhattanDistance(newState, problem.goal)
                         open_queue.push((newState, newPath), newPriority)
                         close_queue.list.remove(y)
-                        print("current < closed") 
+                        # print("current < closed") 
  
                 if len(list(filter(lambda x:child[0] in x, open_queue.heap))) == 0 and len(list(filter(lambda x:child[0] in x, close_queue.list))) == 0: 
                 #if child[0] not in open_queue.heap and child not in close_queue.list: 
