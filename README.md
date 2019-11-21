@@ -8,10 +8,10 @@ Ye Lim Koo<br>
 
 # Contribution
 <br>
-The majority of the code (70%) is provided by: 
+The majority of the code (70%) is provided by: <br>
 * http://ai.berkeley.edu/project_overview.html
 <br>
-The code for map generation is provided by:
+The code for map generation is provided by: <br>
 * https://github.com/boppreh/maze
 
 # Setup Instruction
