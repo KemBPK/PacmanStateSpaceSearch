@@ -6,6 +6,14 @@ Brandon Kem (leader)<br>
 Antonio Guzman<br>
 Ye Lim Koo<br>
 
+# Contribution
+<br>
+The majority of the code (70%) is provided by: 
+* http://ai.berkeley.edu/project_overview.html
+<br>
+The code for map generation is provided by:
+* https://github.com/boppreh/maze
+
 # Setup Instruction
 <br>
 
