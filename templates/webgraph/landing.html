@@ -167,6 +167,7 @@
                                     output += '<span class style=\'color: yellow;\'>' + result.output[i].charAt(j) + '</span>';
                                 }
                             }
+                            output += '<p style=\'color: yellow;\'> The path length for the ' + alg +' algorithm is ' + (result.output.length - 1) + '. </p>';
                             $('#maze').html(output);
                         }, 250 *i);
 
